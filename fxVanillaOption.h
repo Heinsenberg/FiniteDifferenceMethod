@@ -7,13 +7,11 @@ class FXVanillaOption {
 public:
 
 	FXVanillaOption();
-
 	FXVanillaOption(int _callPutFlag, double _strike,double _expiryInYears);
 
 	double getStrike() { return m_strike; }
 	double getExpiryInYears() { return m_expiryInYears; }
 	PayOff* getPayOff() const { return m_payOff; };
-
 
 protected:
 	double m_strike;

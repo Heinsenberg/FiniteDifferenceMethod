@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "MarketEnvironment.h"
 
+MarketEnvironment::MarketEnvironment()
+{
+}
+
 MarketEnvironment::MarketEnvironment(double _fxSpot, double _discountFactorAsset, 
 									 double _discountFactorNumeraire, double _volatility)
 {
@@ -10,3 +14,7 @@ MarketEnvironment::MarketEnvironment(double _fxSpot, double _discountFactorAsset
 	m_volatility = _volatility;
 }
 
+
+MarketEnvironment::~MarketEnvironment()
+{
+}

@@ -6,7 +6,9 @@
 class MarketEnvironment
 {
 public:
+	MarketEnvironment();
 	MarketEnvironment(double _fxSpot, double _discountFactorAsset, double _discountFactorNumeraire, double _volatility);
+	~MarketEnvironment();
 	
 	double getFXSpot() const { return m_fxSpot; }
 	double getDiscountFactorAsset() const { return m_discountFactorAsset; }

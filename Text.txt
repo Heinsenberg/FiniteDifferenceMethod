@@ -1,0 +1,42 @@
+﻿From the Black and Scholes paper (1973)
+
+1) dF/dt + (r-y) S dF/dS + 0.5 sigma^2 S^2 d^2F/dS^2 - rF = 0
+
+(for a call option)
+Inital conditions (at expiry)
+		F(S,T) = max(S-K,0)
+Boundary conditons are  : 
+		F(0,t) = 0 
+       for S->inf , F(S,t) = Sexp(-y(tau)) - Kexp(-r(tau)) where tau = T-t
+
+(for a put option)
+Inital conditions (at expiry)
+		F(S,T) = max(K-S,0)
+Boundary conditions are :
+		F(0,t) = -Sexp(-y(tau)) + Kexp(-r(tau)) where tau = T-t
+	   for S->inf , F(S,t) = 0 
+
+So we then solve the parabolic pde problem. 
+
+
+Now we start with implicit method.
+
+2) dF/dt ~ f(i+1,j)-f(i,j) / deltaT
+
+3) d^2F/dS ~ (f(i,j+1) -2f(i,j) + f(i,j-1)) / (deltaS)^2
+
+Hence substituting 2) & 3) into 1)
+
+we have 
+
+f(i,j−1)·a(j) + f(i,j)·b(j) + f(i,j + 1)·c(j) = f(i + 1,j)
+
+where
+
+a(j) = 0.5*(r−y)*j*∆T − 0.5*∆T*σ^2*j^2
+b(j) = 1 + (σ^2*j^2)*∆T + r*∆T
+c(j) = -0.5*(r−y)*j*∆T − 0.5*∆T*σ^2*j^2 
+
+for i = 0,1,2,...,n−1 and j = 0,1,2,...,m−1.
+
+
