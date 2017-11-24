@@ -42,12 +42,8 @@ private:
 	double m_dt;
 	int m_numberOfTimeSteps;
 	
-	//[see notes.txt in the project]
-	//a(j) = 0.5*(r?y)*j*?T ? 0.5*?T*? ^ 2 * j ^ 2
 	double a(int _j);
-	//b(j) = 1 + (? ^ 2 * j ^ 2)*?T + r*?T
 	double b(int _j);
-	//c(j) = -0.5*(r?y)*j*?T ? 0.5*?T*? ^ 2 * j ^ 2
 	double c(int _j);
 
 	vector<double> m_initialCondition;

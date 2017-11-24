@@ -3,17 +3,6 @@
 #include <iostream>
 #include "ImplicitFiniteDifference.h"
 
-void show_matrix(vector<double> A) {
-
-	size_t size = int(sqrt(A.size()));
-
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++)
-			printf("%2.5f ", A[i * size + j]);
-		printf("\n");
-	}
-}
-
 void show_vector(vector<double> A) {
 
 	size_t size = A.size();
@@ -30,23 +19,26 @@ void show_vector(vector<double> A) {
 }
 
 void main() {
-
+	// Create the currency pair
+	CurrencyPair* CcyPair = new CurrencyPair("EURUSD");
+	CcyPair->parse();
+	
 	// Create the instrument parameters
 	int callPutFlag = -1;				// +1 call on asset ccy , -1 put on asset ccy
 	double strike = 30;					// Strike price
-	double expiryInCalendarYears = 1.00; // One year until expiry, need to divide by annualFactor at some point later and have parts of a day
+	double expiryInCalendarYears = 0.75; // One year until expiry, need to divide by annualFactor at some point later and have parts of a day
 
 	//Create the market environment
 	double spot = 30;
 	double discountFactorAsset = exp(0.1);	// discount Factor asset 
 	double discountFactorNumeraire = 1.00;  // discount Factor numeraire
-	double volatility = 0.3;				// Volatility of the underlying (40%)
+	double volatility = 0.4;				// Volatility of the underlying (40%)
 
 	//Create market environment
-	MarketEnvironment* MktEnvironment = new MarketEnvironment(spot, discountFactorAsset, discountFactorNumeraire, volatility);
+	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
 
 	//Create a European Option 
-	EuropeanOption* EuropeanOpt = new EuropeanOption(strike, callPutFlag, expiryInCalendarYears);
+	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryInCalendarYears);
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();

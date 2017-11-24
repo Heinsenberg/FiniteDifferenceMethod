@@ -2,17 +2,14 @@
 #include "BoundaryAndInitialConditions.h"
 
 
-BoundaryAndInitialConditions::BoundaryAndInitialConditions()
-{
+BoundaryAndInitialConditions::BoundaryAndInitialConditions() {
 }
 
 
-BoundaryAndInitialConditions::~BoundaryAndInitialConditions()
-{
+BoundaryAndInitialConditions::~BoundaryAndInitialConditions() {
 }
 
-double BoundaryAndInitialConditions::boundaryLeft(double t, double x) const
-{
+double BoundaryAndInitialConditions::boundaryLeft(double t, double x) const {
 	double returnValue = 0.0;
 
 	if (getEuropeanOption()->getCallPutFlag() == 1) {
@@ -24,8 +21,7 @@ double BoundaryAndInitialConditions::boundaryLeft(double t, double x) const
 	return returnValue;
 }
 
-double BoundaryAndInitialConditions::boundaryRight(double t, double x) const
-{
+double BoundaryAndInitialConditions::boundaryRight(double t, double x) const {
 		double returnValue = 0.0;
 
 		if (getEuropeanOption()->getCallPutFlag() == -1) {
@@ -39,7 +35,6 @@ double BoundaryAndInitialConditions::boundaryRight(double t, double x) const
 		return returnValue;
 }
 
-double BoundaryAndInitialConditions::initialCondition(double _x) const
-{
+double BoundaryAndInitialConditions::initialCondition(double _x) const {
 	return getEuropeanOption()->getPayOff()->operator()(_x);
 }
