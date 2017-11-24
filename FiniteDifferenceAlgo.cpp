@@ -26,13 +26,13 @@ void main() {
 	// Create the instrument parameters
 	int callPutFlag = -1;				// +1 call on asset ccy , -1 put on asset ccy
 	double strike = 30;					// Strike price
-	double expiryInCalendarYears = 0.75; // One year until expiry, need to divide by annualFactor at some point later and have parts of a day
+	double expiryInCalendarYears = 0.75; // Annualised expiry time, need to divide by annualFactor at some point later and have parts of a day
 
 	//Create the market environment
-	double spot = 30;
+	double spot = 30; // FX Spot rate
 	double discountFactorAsset = exp(0.1);	// discount Factor asset 
 	double discountFactorNumeraire = 1.00;  // discount Factor numeraire
-	double volatility = 0.4;				// Volatility of the underlying (40%)
+	double volatility = 0.4;		// Volatility of the underlying (40%)
 
 	//Create market environment
 	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
