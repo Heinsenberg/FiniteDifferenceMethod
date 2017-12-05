@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __INSTRUMENT_H
+#define __INSTRUMENT_H
+
 #include "payoff.h"
 #include "CurrencyPair.h"
 
@@ -39,3 +41,4 @@ private:
 	CurrencyPair* m_currencyPair;
 };
 
+#endif

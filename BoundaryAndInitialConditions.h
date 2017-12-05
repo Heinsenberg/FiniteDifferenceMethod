@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __BOUNDARY_AND_INITIAL_CONDITIONS_H
+#define __BOUNDARY_AND_INITIAL_CONDITIONS_H
+
 #include "Instrument.h"
 #include "MarketEnvironment.h"
 
@@ -24,3 +26,4 @@ private:
 
 };
 
+#endif

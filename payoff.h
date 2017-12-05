@@ -1,7 +1,5 @@
-#pragma once
-
-#ifndef __PAY_OFF_HPP
-#define __PAY_OFF_HPP
+#ifndef __PAY_OFF_H
+#define __PAY_OFF_H
 
 #include <algorithm>
 

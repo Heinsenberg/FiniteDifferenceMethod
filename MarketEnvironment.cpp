@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "MarketEnvironment.h"
 
-MarketEnvironment::MarketEnvironment(){
+MarketEnvironment::MarketEnvironment() {
 	
 }
 
-MarketEnvironment::MarketEnvironment(CurrencyPair* _currencyPair, double _fxSpot, double _discountFactorAsset, 
-									 double _discountFactorNumeraire, double _volatility){
+MarketEnvironment::MarketEnvironment(CurrencyPair* _currencyPair, double _fxSpot, vector<double> _discountFactorAsset, 
+									 vector<double> _discountFactorNumeraire, double _volatility){
 	m_currencyPair = _currencyPair;
 	m_fxSpot = _fxSpot; 
 	m_discountFactorAsset = _discountFactorAsset; 
@@ -15,6 +15,6 @@ MarketEnvironment::MarketEnvironment(CurrencyPair* _currencyPair, double _fxSpot
 }
 
 
-MarketEnvironment::~MarketEnvironment(){
+MarketEnvironment::~MarketEnvironment() {
 
 }

@@ -1,7 +1,7 @@
 
 #include "stdafx.h"
 #include <iostream>
-#include "ImplicitFiniteDifference.h"
+#include "FiniteDifferenceEngine.h"
 
 void show_vector(vector<double> A) {
 
@@ -24,21 +24,21 @@ void main() {
 	CcyPair->parse();
 	
 	// Create the instrument parameters
-	int callPutFlag = -1;				// +1 call on asset ccy , -1 put on asset ccy
-	double strike = 30;					// Strike price
-	double expiryInCalendarYears = 0.75; // Annualised expiry time, need to divide by annualFactor at some point later and have parts of a day
+	int callPutFlag = -1;				 // +1 call on asset ccy , -1 put on asset ccy
+	double strike = 30;					 // Strike price
+	double expiryDays = 0.75 ;
 
 	//Create the market environment
-	double spot = 30; // FX Spot rate
-	double discountFactorAsset = exp(0.1);	// discount Factor asset 
-	double discountFactorNumeraire = 1.00;  // discount Factor numeraire
-	double volatility = 0.4;		// Volatility of the underlying (40%)
+	double spot = 30;
+	vector<double> discountFactorAsset(1000,exp(0.1));	 // discount Factor asset 
+	vector<double> discountFactorNumeraire(1000, 1.00);  // discount Factor numeraire
+	double volatility = 0.4;							 // Volatility of the underlying (40%)
 
 	//Create market environment
 	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
 
 	//Create a European Option 
-	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryInCalendarYears);
+	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryDays);
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();
@@ -46,20 +46,23 @@ void main() {
 	BndAndInitConditions->setMarketEnvironment(MktEnvironment);
 
 	//Create the Black-Scholes Model 
-	BlackScholes1FactorPDE* BS1FactorPDE = new BlackScholes1FactorPDE();
-	BS1FactorPDE->setMarketEnvironment(MktEnvironment);
+	OneFactorBlackScholes* OneFactorBSModel = new OneFactorBlackScholes();
+	OneFactorBSModel->setMarketEnvironment(MktEnvironment);
 
 	//Set the range of the vector for the FD grid
-	int numberOfSpotLevels = 7; int numberOfTimeSteps = 3;
+	int numberOfSpotLevels = 101; int numberOfTimeSteps = 100;
 
 	//Create FD engine
 	ImplicitFiniteDifference* ImplFiniteDifference = new ImplicitFiniteDifference();
-	ImplFiniteDifference->setModel(BS1FactorPDE);
-	ImplFiniteDifference->setBoundaryAndInitialConditions(BndAndInitConditions);
-	ImplFiniteDifference->calculate(numberOfSpotLevels, numberOfTimeSteps);
+	ImplFiniteDifference->setModel(OneFactorBSModel);
+	
+	FiniteDifferenceEngine* FDE = new FiniteDifferenceEngine();
+	FDE->setBoundaryAndInitialConditions(BndAndInitConditions);
+	FDE->setImplicitFiniteDifference(ImplFiniteDifference);
+	FDE->calculate(numberOfSpotLevels, numberOfTimeSteps);
 	
 	//Output the result vector
-	vector<double> diagonal = ImplFiniteDifference->getFinalOutput();
+	vector<double> diagonal = FDE->getFinalResult();
 	show_vector(diagonal);
 
 	int aNumber;
