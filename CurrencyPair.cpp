@@ -2,7 +2,6 @@
 #include <stdexcept>
 #include "CurrencyPair.h"
 
-
 CurrencyPair::CurrencyPair(string _currencyPair) {
 	m_inputCurrencyPair = _currencyPair;
 
@@ -14,10 +13,10 @@ CurrencyPair::~CurrencyPair() {
 
 void CurrencyPair::parse() {
 	try {
-		(m_inputCurrencyPair.length() < 6) ? throw invalid_argument("String submitted isnt long enough to create 2 x currency ISO substrings, try EURUSD or EUR/USD") : splitCurrencyPair();
+		(m_inputCurrencyPair.length() != 6) ? throw runtime_error("You inputted: '" + m_inputCurrencyPair + "'  this string isnt formed of create 2 x currency strings, try the format like EURUSD, GBPUSD, USDJPY etc") : splitCurrencyPair();
 
 	}
-	catch (invalid_argument& e) {
+	catch (runtime_error& e) {
 		m_errorMessage = e;
 	}
 }

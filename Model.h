@@ -10,10 +10,17 @@ public:
 	~Model();
 
 	// Diffusion coefficient
-	virtual double diffusionCoeff(double t, double x) const;
+	virtual double diffusionSpotCoeff(double t, double x) const;
+
+	// Diffusion coefficient
+	virtual double diffusionVolatilityCoeff(double t, double x) const;
 
 	// Convection coefficient
-	virtual double driftCoeff(double t, double x) const;
+	virtual double driftSpotCoeff(double t, double x) const;
+
+	// Convection coefficient
+	virtual double driftVolatilityCoeff(double t, double x) const;
+
 
 	void setMarketEnvironment(MarketEnvironment* _marketEnvironment) { m_marketEnvironment = _marketEnvironment; };
 
@@ -25,10 +32,10 @@ class OneFactorBlackScholes : public Model {
 
 public:
 	// Diffusion coefficient
-	 double diffusionCoeff(double t, double x) const override;
+	 double diffusionSpotCoeff(double t, double x) const ;
 
 	// Convection coefficient
-	double driftCoeff(double t, double x) const override;
+	double driftSpotCoeff(double t, double x) const ;
 };
 
 #endif

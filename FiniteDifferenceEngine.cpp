@@ -2,24 +2,39 @@
 #include "FiniteDifferenceEngine.h"
 #include "Tridiagonal.h"
 
-
 FiniteDifferenceEngine::FiniteDifferenceEngine() {
 }
-
 
 FiniteDifferenceEngine::~FiniteDifferenceEngine() {
 }
 
-
 void FiniteDifferenceEngine::calculate(int _numberOfSpotLevels, int _numberOfTimeSteps) {
 
-	int arrayLength = _numberOfSpotLevels;
-	m_numberOfTimeSteps = _numberOfTimeSteps;
+	try {
+	
+		(_numberOfSpotLevels <= 0) ? throw std::runtime_error("Number Of Spot Levels MUST be greater than 0") : m_numberOfSpotSteps = _numberOfSpotLevels;
+	
+	}
+	catch (std::runtime_error& e) {
+		m_errorMessage = e;
+		return;
+	}
+
+	try {
+		
+		(_numberOfSpotLevels <= 0) ? throw std::runtime_error("Number Of Time Steps MUST be greater than 0") : m_numberOfTimeSteps = _numberOfTimeSteps;
+
+	}
+	catch (std::runtime_error& e) {
+		m_errorMessage = e;
+		return;
+	}
+
 
 	calculateTimeStepSize();
-	calculateSpaceStepize(arrayLength);
-	createInitialCondition(arrayLength);
-	createModelMatrix(arrayLength);
+	calculateSpaceStepize();
+	createInitialCondition();
+	createModelMatrix();
 
 	// b = m_initialCondition
 	// A = LU decomposition
@@ -45,19 +60,19 @@ void FiniteDifferenceEngine::calculate(int _numberOfSpotLevels, int _numberOfTim
 
 void FiniteDifferenceEngine::calculateTimeStepSize() {
 	double expiryInDays = m_boundaryAndInitialConditions->getEuropeanOption()->getExpiryInDays();
-	m_dt = expiryInDays / m_numberOfTimeSteps;
+	m_dt = (expiryInDays / m_numberOfTimeSteps) / m_boundaryAndInitialConditions->getMarketEnvironment()->getAnnualFactor();
 
 }
 
-void FiniteDifferenceEngine::calculateSpaceStepize(int arrayLength) {
+void FiniteDifferenceEngine::calculateSpaceStepize() {
 	double spot = m_boundaryAndInitialConditions->getMarketEnvironment()->getFXSpot();
-	m_dx = spot / arrayLength;
+	m_dx = spot / m_numberOfSpotSteps;
 }
 
-void FiniteDifferenceEngine::createInitialCondition(int arrayLength) {
+void FiniteDifferenceEngine::createInitialCondition() {
 
-	size_t size = arrayLength;
-	double m_dx = m_boundaryAndInitialConditions->getMarketEnvironment()->getFXSpot() / int(0.5*arrayLength);
+	size_t size = m_numberOfSpotSteps;
+	double m_dx = m_boundaryAndInitialConditions->getMarketEnvironment()->getFXSpot() / int(0.5*m_numberOfSpotSteps);
 
 	m_initialCondition.resize(size - 2);
 
@@ -66,8 +81,8 @@ void FiniteDifferenceEngine::createInitialCondition(int arrayLength) {
 	}
 }
 
-void FiniteDifferenceEngine::createModelMatrix(int arrayLength) {
-	size_t size = arrayLength;
+void FiniteDifferenceEngine::createModelMatrix() {
+	size_t size = m_numberOfSpotSteps;
 
 	m_subdiagonal.resize(size - 3); m_superdiagonal.resize(size - 3);
 	m_diagonal.resize(size - 2);

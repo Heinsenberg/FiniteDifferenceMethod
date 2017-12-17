@@ -20,13 +20,15 @@ void show_vector(vector<double> A) {
 
 void main() {
 	// Create the currency pair
-	CurrencyPair* CcyPair = new CurrencyPair("EURUSD");
+	CurrencyPair* CcyPair = new CurrencyPair("EURUSD..");
 	CcyPair->parse();
-	
+	printf(CcyPair->getErrorMessage().what());
+	printf("\n");
+
 	// Create the instrument parameters
 	int callPutFlag = -1;				 // +1 call on asset ccy , -1 put on asset ccy
 	double strike = 30;					 // Strike price
-	double expiryDays = 0.75 ;
+	double expiryDays = 0.75*365 ;
 
 	//Create the market environment
 	double spot = 30;
@@ -50,7 +52,7 @@ void main() {
 	OneFactorBSModel->setMarketEnvironment(MktEnvironment);
 
 	//Set the range of the vector for the FD grid
-	int numberOfSpotLevels = 101; int numberOfTimeSteps = 100;
+	int numberOfSpotLevels = 7; int numberOfTimeSteps = 3;
 
 	//Create FD engine
 	ImplicitFiniteDifference* ImplFiniteDifference = new ImplicitFiniteDifference();
@@ -60,11 +62,12 @@ void main() {
 	FDE->setBoundaryAndInitialConditions(BndAndInitConditions);
 	FDE->setImplicitFiniteDifference(ImplFiniteDifference);
 	FDE->calculate(numberOfSpotLevels, numberOfTimeSteps);
-	
+
 	//Output the result vector
 	vector<double> diagonal = FDE->getFinalResult();
-	show_vector(diagonal);
-
+	
+	(diagonal.size() == 0) ? printf(FDE->getErrorMessage().what()) : show_vector(diagonal);
+	
 	int aNumber;
 	std::cin >> aNumber;
 

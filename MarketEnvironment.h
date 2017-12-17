@@ -18,6 +18,7 @@ public:
 	vector<double> getDiscountFactorAsset() const { return m_discountFactorAsset; }
 	vector<double> getDiscountFactorNumeraire() const { return m_discountFactorNumeraire; }
 	double getVolatility() const { return m_volatility; }
+	double getAnnualFactor() const { return m_annualFactor; }
 
 private:
 	CurrencyPair* m_currencyPair;
@@ -25,6 +26,7 @@ private:
 	vector<double> m_discountFactorNumeraire;
 	double m_fxSpot;
 	double m_volatility;
+	const double m_annualFactor = 365.0;
 };
 
 #endif

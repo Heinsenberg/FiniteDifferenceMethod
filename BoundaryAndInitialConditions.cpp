@@ -7,7 +7,7 @@ BoundaryAndInitialConditions::BoundaryAndInitialConditions() {
 BoundaryAndInitialConditions::~BoundaryAndInitialConditions() {
 }
 
-double BoundaryAndInitialConditions::boundaryLeft(double t, double x) const {
+double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 
 	double returnValue;
 
@@ -16,21 +16,14 @@ double BoundaryAndInitialConditions::boundaryLeft(double t, double x) const {
 	return returnValue;
 }
 
-double BoundaryAndInitialConditions::boundaryRight(double t, double x) const {
-		double returnValue = 0.0;
+double BoundaryAndInitialConditions::boundaryRight(double _t, double _x) const {
+			double returnValue;
 
-		if (getEuropeanOption()->getCallPutFlag() == -1) {
-			// something like strike*exp(-r*tau) DF(t,T) 
-			// DF(t,T) = exp(-r*(T-t)) = DF(0,T) / DF(0,t) = DF[T] / DF[t];
-			// (getEuropeanOption()->getCallPutFlag() == -1) ? returnValue = getMarketEnvironment()->getDiscountFactorAsset()[expiryDays]/getMarketEnvironment()->getDiscountFactorAsset()[t] : returnValue = 0.0;
-			int expiryDays = (int) getEuropeanOption()->getExpiryInDays();
-
+			int expiryDays = (int)getEuropeanOption()->getExpiryInDays();
 			double discountFactorAsset = getMarketEnvironment()->getDiscountFactorAsset()[expiryDays];
-			double assetDepoRate = log(discountFactorAsset);
-			double discountRate = exp(-assetDepoRate*t);
-
-			returnValue = getEuropeanOption()->getStrike();
-		}
+			double timeInYears = _t / getMarketEnvironment()->getAnnualFactor();
+			
+			(getEuropeanOption()->getCallPutFlag() == -1) ? returnValue = getEuropeanOption()->getStrike()*pow(discountFactorAsset, timeInYears) : returnValue = 0.0;
 		
 		return returnValue;
 }

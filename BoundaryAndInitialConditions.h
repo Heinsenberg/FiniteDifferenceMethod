@@ -4,14 +4,14 @@
 #include "Instrument.h"
 #include "MarketEnvironment.h"
 
-class BoundaryAndInitialConditions
-{
+class BoundaryAndInitialConditions {
+
 public:
 	BoundaryAndInitialConditions();
 	~BoundaryAndInitialConditions();
 
-	double boundaryLeft(double t, double x) const;
-	double boundaryRight(double t, double x) const;
+	double boundaryLeft(double _t, double _x) const;
+	double boundaryRight(double _t, double _x) const;
 	double initialCondition(double _x) const;
 
 	MarketEnvironment* getMarketEnvironment() const { return m_marketEnvironment; }

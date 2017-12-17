@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "stdafx.h"
+#include <stdexcept>
 #include "ImplicitFiniteDifference.h"
 #include "BoundaryAndInitialConditions.h"
 
@@ -23,18 +24,21 @@ public:
 
 	vector<double> getFinalResult() { return m_finalOutput; };
 
+	exception getErrorMessage() { return m_errorMessage; };
+
 private:
 
 	ImplicitFiniteDifference* m_implicitFiniteDifference;
 	BoundaryAndInitialConditions* m_boundaryAndInitialConditions;
 
 	void calculateTimeStepSize();
-	void calculateSpaceStepize(int _arrayLength);
-	void createInitialCondition(int _arrayLength);
-	void createModelMatrix(int _arrayLength);
+	void calculateSpaceStepize();
+	void createInitialCondition();
+	void createModelMatrix();
 
 	double m_dx;
 	double m_dt;
+	int m_numberOfSpotSteps;
 	int m_numberOfTimeSteps;
 	
 	vector<double> m_initialCondition;
@@ -42,6 +46,8 @@ private:
 	vector<double> m_superdiagonal;
 	vector<double> m_diagonal;
 	vector<double> m_finalOutput;
+
+	exception m_errorMessage;
 
 };
 
