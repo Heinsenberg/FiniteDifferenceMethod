@@ -59,7 +59,7 @@ void FiniteDifferenceEngine::calculate(int _numberOfSpotLevels, int _numberOfTim
 }
 
 void FiniteDifferenceEngine::calculateTimeStepSize() {
-	double expiryInDays = m_boundaryAndInitialConditions->getEuropeanOption()->getExpiryInDays();
+	double expiryInDays = m_boundaryAndInitialConditions->getEuropeanOption()->getExpiryDays();
 	m_dt = (expiryInDays / m_numberOfTimeSteps) / m_boundaryAndInitialConditions->getMarketEnvironment()->getAnnualFactor();
 
 }

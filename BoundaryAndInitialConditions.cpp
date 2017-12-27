@@ -9,7 +9,7 @@ BoundaryAndInitialConditions::~BoundaryAndInitialConditions() {
 
 double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 
-	double returnValue;
+	double returnValue = 0.0;
 
 	(getEuropeanOption()->getCallPutFlag() == 1) ? returnValue = getMarketEnvironment()->getFXSpot() : returnValue = 0.0;
 
@@ -17,10 +17,10 @@ double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 }
 
 double BoundaryAndInitialConditions::boundaryRight(double _t, double _x) const {
-			double returnValue;
+			double returnValue = 0.0;
 
-			int expiryDays = (int)getEuropeanOption()->getExpiryInDays();
-			double discountFactorAsset = getMarketEnvironment()->getDiscountFactorAsset()[expiryDays];
+			int deliveryDays = (int)getEuropeanOption()->getDeliveryDays();
+			double discountFactorAsset = getMarketEnvironment()->getDiscountFactorAsset()[deliveryDays];
 			double timeInYears = _t / getMarketEnvironment()->getAnnualFactor();
 			
 			(getEuropeanOption()->getCallPutFlag() == -1) ? returnValue = getEuropeanOption()->getStrike()*pow(discountFactorAsset, timeInYears) : returnValue = 0.0;

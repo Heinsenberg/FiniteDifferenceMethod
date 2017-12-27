@@ -26,7 +26,7 @@ private:
 	vector<double> m_discountFactorNumeraire;
 	double m_fxSpot;
 	double m_volatility;
-	const double m_annualFactor = 365.0;
+	double m_annualFactor = 365.0;
 };
 
 #endif

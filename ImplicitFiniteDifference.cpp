@@ -15,4 +15,3 @@ double ImplicitFiniteDifference::c(double _t, int _j) {
 	double result = -_t*(m_model->diffusionSpotCoeff(1, _j) + 0.5*m_model->driftSpotCoeff(0, _j));
 	return result;
 }
-

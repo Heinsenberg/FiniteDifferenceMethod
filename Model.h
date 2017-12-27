@@ -32,10 +32,10 @@ class OneFactorBlackScholes : public Model {
 
 public:
 	// Diffusion coefficient
-	 double diffusionSpotCoeff(double t, double x) const ;
+	 double diffusionSpotCoeff(double _t, double _x) const ;
 
 	// Convection coefficient
-	double driftSpotCoeff(double t, double x) const ;
+	double driftSpotCoeff(double _t, double _x) const ;
 };
 
 #endif

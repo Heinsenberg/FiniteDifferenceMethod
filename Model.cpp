@@ -28,15 +28,16 @@ double Model::driftVolatilityCoeff(double t, double x) const
 	return 0.0;
 }
 
-double OneFactorBlackScholes::diffusionSpotCoeff(double t, double x) const {
+double OneFactorBlackScholes::diffusionSpotCoeff(double _t, double _x) const {
 	double vol = m_marketEnvironment->getVolatility();
-	return 0.5*vol*vol*x*x; 
+	return 0.5*vol*vol*_x*_x; 
 }
 
-double OneFactorBlackScholes::driftSpotCoeff(double t, double x) const {
-	double DFAsset = m_marketEnvironment->getDiscountFactorAsset()[0];
-	double DFNumeraire = m_marketEnvironment->getDiscountFactorNumeraire()[0];
+double OneFactorBlackScholes::driftSpotCoeff(double _t, double _x) const {
+	int tau = (int)_t;
+	double DFAsset = m_marketEnvironment->getDiscountFactorAsset()[tau];
+	double DFNumeraire = m_marketEnvironment->getDiscountFactorNumeraire()[tau];
 
 	double drift = log(DFAsset/ DFNumeraire);
-	return drift*x;
+	return drift*_x;
 }

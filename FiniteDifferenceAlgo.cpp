@@ -20,15 +20,17 @@ void show_vector(vector<double> A) {
 
 void main() {
 	// Create the currency pair
-	CurrencyPair* CcyPair = new CurrencyPair("EURUSD..");
+	CurrencyPair* CcyPair = new CurrencyPair("EURUSD");
 	CcyPair->parse();
-	printf(CcyPair->getErrorMessage().what());
-	printf("\n");
+	
+	//printf(CcyPair->getErrorMessage().what());
+	//printf("\n");
 
 	// Create the instrument parameters
 	int callPutFlag = -1;				 // +1 call on asset ccy , -1 put on asset ccy
 	double strike = 30;					 // Strike price
 	double expiryDays = 0.75*365 ;
+	double deliveryDays = 0.75 * 365;
 
 	//Create the market environment
 	double spot = 30;
@@ -40,7 +42,7 @@ void main() {
 	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
 
 	//Create a European Option 
-	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryDays);
+	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryDays, deliveryDays);
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();
