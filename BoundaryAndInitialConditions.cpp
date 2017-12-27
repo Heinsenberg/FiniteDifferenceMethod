@@ -9,7 +9,7 @@ BoundaryAndInitialConditions::~BoundaryAndInitialConditions() {
 
 double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 
-	double returnValue = 0.0;
+	double returnValue;
 
 	(getEuropeanOption()->getCallPutFlag() == 1) ? returnValue = getMarketEnvironment()->getFXSpot() : returnValue = 0.0;
 
@@ -17,7 +17,7 @@ double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 }
 
 double BoundaryAndInitialConditions::boundaryRight(double _t, double _x) const {
-			double returnValue = 0.0;
+			double returnValue;
 
 			int deliveryDays = (int)getEuropeanOption()->getDeliveryDays();
 			double discountFactorAsset = getMarketEnvironment()->getDiscountFactorAsset()[deliveryDays];
