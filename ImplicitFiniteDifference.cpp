@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "ImplicitFiniteDifference.h"
 
 double ImplicitFiniteDifference::a(double _t, int _j) {	

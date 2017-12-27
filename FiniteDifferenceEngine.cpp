@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "FiniteDifferenceEngine.h"
 #include "Tridiagonal.h"
 

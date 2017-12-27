@@ -1,9 +1,4 @@
-#pragma once
-#include "stdafx.h"
 #include "payoff.h"
-
-#ifndef __PAY_OFF_CPP
-#define __PAY_OFF_CPP
 
 PayOff::PayOff() {}
 
@@ -14,6 +9,4 @@ PayOffVanilla::PayOffVanilla(const double& _strike, const int& _callPutFlag) { m
 double PayOffVanilla::operator() (const double& spot) const {
 	return std::max(m_callPutFlag*(spot - m_strike), 0.0); // Standard Vanilla pay-off
 
-
 }
-#endif

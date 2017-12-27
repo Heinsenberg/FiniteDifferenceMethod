@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include <stdexcept>
 #include "CurrencyPair.h"
 

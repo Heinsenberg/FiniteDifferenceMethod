@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "BoundaryAndInitialConditions.h"
 
 BoundaryAndInitialConditions::BoundaryAndInitialConditions() {
@@ -9,7 +8,7 @@ BoundaryAndInitialConditions::~BoundaryAndInitialConditions() {
 
 double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 
-	double returnValue;
+	double returnValue = 0.0;
 
 	(getEuropeanOption()->getCallPutFlag() == 1) ? returnValue = getMarketEnvironment()->getFXSpot() : returnValue = 0.0;
 
@@ -17,7 +16,7 @@ double BoundaryAndInitialConditions::boundaryLeft(double _t, double _x) const {
 }
 
 double BoundaryAndInitialConditions::boundaryRight(double _t, double _x) const {
-			double returnValue;
+			double returnValue = 0.0;
 
 			int deliveryDays = (int)getEuropeanOption()->getDeliveryDays();
 			double discountFactorAsset = getMarketEnvironment()->getDiscountFactorAsset()[deliveryDays];

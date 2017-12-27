@@ -2,7 +2,6 @@
 #define __IMPLICIT_FINITE_DIFFERENCE_H
 
 #include <vector>
-#include "stdafx.h"
 #include "BoundaryAndInitialConditions.h"
 #include "Model.h"
 

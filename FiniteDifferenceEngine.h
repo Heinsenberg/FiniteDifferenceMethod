@@ -2,7 +2,6 @@
 #define __FINITE_DIFFERENCE_ENGINE_H
 
 #include <vector>
-#include "stdafx.h"
 #include <stdexcept>
 #include "ImplicitFiniteDifference.h"
 #include "BoundaryAndInitialConditions.h"

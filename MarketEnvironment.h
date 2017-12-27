@@ -1,9 +1,7 @@
 #ifndef __MARKET_ENVIRONMENT_H
 #define __MARKET_ENVIRONMENT_H
 
-#include "stdafx.h"
 #include "CurrencyPair.h"
-
 #include <vector>
 
 class MarketEnvironment

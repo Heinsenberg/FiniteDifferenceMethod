@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "MarketEnvironment.h"
 
 MarketEnvironment::MarketEnvironment() {

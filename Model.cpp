@@ -1,6 +1,5 @@
-#include "stdafx.h"
-#include "Model.h"
 #include <math.h>
+#include "Model.h"
 
 Model::Model() {
 }
