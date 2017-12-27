@@ -7,7 +7,6 @@ void show_vector(vector<double> A) {
 
 	for (int i = 0; i < size; i++) {
 		printf("%2.5f ", A[i]);
-		//printf("\n");
 	}
 	int mktSpotArrayIndex = int(0.5*size);
 
@@ -20,10 +19,8 @@ void main() {
 	// Create the currency pair
 	CurrencyPair* CcyPair = new CurrencyPair("EURUSD");
 	CcyPair->parse();
+   (CcyPair->getError()->getErrorFlag()) ? printf(CcyPair->getError()->getException().what()) : printf("OKAY");	
 	
-	//printf(CcyPair->getErrorMessage().what());
-	//printf("\n");
-
 	// Create the instrument parameters
 	int callPutFlag = -1;				 // +1 call on asset ccy , -1 put on asset ccy
 	double strike = 30;					 // Strike price
@@ -41,6 +38,7 @@ void main() {
 
 	//Create a European Option 
 	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryDays, deliveryDays);
+	(EuropeanOpt->getError()->getErrorFlag()) ? printf(EuropeanOpt->getError()->getException().what()) : printf("OKAY");
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();
@@ -52,7 +50,7 @@ void main() {
 	OneFactorBSModel->setMarketEnvironment(MktEnvironment);
 
 	//Set the range of the vector for the FD grid
-	int numberOfSpotLevels = 7; int numberOfTimeSteps = 3;
+	int numberOfSpotLevels = 7;  int numberOfTimeSteps = 3;
 
 	//Create FD engine
 	ImplicitFiniteDifference* ImplFiniteDifference = new ImplicitFiniteDifference();
@@ -62,12 +60,10 @@ void main() {
 	FDE->setBoundaryAndInitialConditions(BndAndInitConditions);
 	FDE->setImplicitFiniteDifference(ImplFiniteDifference);
 	FDE->calculate(numberOfSpotLevels, numberOfTimeSteps);
-
+	
 	//Output the result vector
-	vector<double> diagonal = FDE->getFinalResult();
-	
-	(diagonal.size() == 0) ? printf(FDE->getErrorMessage().what()) : show_vector(diagonal);
-	
+   (FDE->getError()->getErrorFlag()) ? printf(FDE->getError()->getException().what()) : show_vector(FDE->getFinalResult());
+
 	int aNumber;
 	std::cin >> aNumber;
 

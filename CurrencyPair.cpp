@@ -1,9 +1,10 @@
 #include <stdexcept>
 #include "CurrencyPair.h"
+#include "ErrorHandler.h"
 
 CurrencyPair::CurrencyPair(string _currencyPair) {
 	m_inputCurrencyPair = _currencyPair;
-
+	m_error = new ErrorHandler();
 }
 
 CurrencyPair::~CurrencyPair() {
@@ -16,7 +17,8 @@ void CurrencyPair::parse() {
 
 	}
 	catch (runtime_error& e) {
-		m_errorMessage = e;
+		m_error->setException(e);
+		m_error->setErrorFlag(true);
 	}
 }
 

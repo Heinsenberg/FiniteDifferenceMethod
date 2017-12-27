@@ -35,6 +35,7 @@ public:
 	int getCallPutFlag() const { return m_callPutFlag; };
 	CurrencyPair* getCurrencyPair() const { return m_currencyPair; };
 	PayOff* getPayOff() const { return m_payOff; };
+	ErrorHandler* getError() const { return m_error; };
 
 private:
 	double m_strike;
@@ -42,6 +43,8 @@ private:
 	double m_deliveryDays;
 	int m_callPutFlag;
 	CurrencyPair* m_currencyPair;
+	ErrorHandler* m_error;
+
 };
 
 #endif

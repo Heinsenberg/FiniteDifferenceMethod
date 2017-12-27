@@ -2,7 +2,6 @@
 #define __FINITE_DIFFERENCE_ENGINE_H
 
 #include <vector>
-#include <stdexcept>
 #include "ImplicitFiniteDifference.h"
 #include "BoundaryAndInitialConditions.h"
 
@@ -23,7 +22,7 @@ public:
 
 	vector<double> getFinalResult() { return m_finalOutput; };
 
-	exception getErrorMessage() { return m_errorMessage; };
+	ErrorHandler* getError() { return m_error; };
 
 private:
 
@@ -46,7 +45,7 @@ private:
 	vector<double> m_diagonal;
 	vector<double> m_finalOutput;
 
-	exception m_errorMessage;
+	ErrorHandler* m_error;
 
 };
 
