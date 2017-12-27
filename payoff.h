@@ -1,8 +1,6 @@
 #ifndef __PAY_OFF_H
 #define __PAY_OFF_H
 
-#include <algorithm>
-
 class PayOff {
 public:
 	PayOff(); 
