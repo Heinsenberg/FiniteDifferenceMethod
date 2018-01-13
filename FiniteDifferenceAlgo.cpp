@@ -16,10 +16,6 @@ void show_vector(vector<double> A) {
 }
 
 void main() {
-	// Create the currency pair
-	CurrencyPair* CcyPair = new CurrencyPair("EURUSD");
-	CcyPair->parse();
-   (CcyPair->getError()->getErrorFlag()) ? printf(CcyPair->getError()->getException().what()) : printf("OKAY");	
 	
 	// Create the instrument parameters
 	int callPutFlag = -1;				 // +1 call on asset ccy , -1 put on asset ccy
@@ -28,29 +24,34 @@ void main() {
 	double deliveryDays = 0.75 * 365;
 
 	//Create the market environment
+	string ccyPair = "EURUSD";
 	double spot = 30;
 	vector<double> discountFactorAsset(1000,exp(0.1));	 // discount Factor asset 
 	vector<double> discountFactorNumeraire(1000, 1.00);  // discount Factor numeraire
 	double volatility = 0.4;							 // Volatility of the underlying (40%)
+	double annualFactor = 365.0;						 // AnnualFactor
+
+	// Create the currency pair
+	CurrencyPair* CcyPair = new CurrencyPair(ccyPair);
+	CcyPair->parse();
+	(CcyPair->getError()->getErrorFlag()) ? printf(CcyPair->getError()->getException().what()) : printf("OKAY");
 
 	//Create market environment
 	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
+	MktEnvironment->setAnnualFactor(annualFactor);
 
 	//Create a European Option 
-	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair, strike, callPutFlag, expiryDays, deliveryDays);
+	EuropeanOption* EuropeanOpt = new EuropeanOption(strike, callPutFlag, expiryDays, deliveryDays);
 	(EuropeanOpt->getError()->getErrorFlag()) ? printf(EuropeanOpt->getError()->getException().what()) : printf("OKAY");
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();
-	BndAndInitConditions->setEuropeanOption(EuropeanOpt);
 	BndAndInitConditions->setMarketEnvironment(MktEnvironment);
-
+	BndAndInitConditions->setEuropeanOption(EuropeanOpt);
+	
 	//Create the Black-Scholes Model 
 	OneFactorBlackScholes* OneFactorBSModel = new OneFactorBlackScholes();
 	OneFactorBSModel->setMarketEnvironment(MktEnvironment);
-
-	//Set the range of the vector for the FD grid
-	int numberOfSpotLevels = 7;  int numberOfTimeSteps = 3;
 
 	//Create FD engine
 	ImplicitFiniteDifference* ImplFiniteDifference = new ImplicitFiniteDifference();
@@ -59,6 +60,9 @@ void main() {
 	FiniteDifferenceEngine* FDE = new FiniteDifferenceEngine();
 	FDE->setBoundaryAndInitialConditions(BndAndInitConditions);
 	FDE->setImplicitFiniteDifference(ImplFiniteDifference);
+	
+	//Set the range of the vector for the FD grid
+	int numberOfSpotLevels = 7;  int numberOfTimeSteps = 3;
 	FDE->calculate(numberOfSpotLevels, numberOfTimeSteps);
 	
 	//Output the result vector

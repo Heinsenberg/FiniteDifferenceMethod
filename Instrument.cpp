@@ -12,7 +12,7 @@ PayOff * Instrument::operator()(const PayOff & _payOff){
 	return m_payOff;
 }
 
-EuropeanOption::EuropeanOption(CurrencyPair* _ccyPair, const double& _strike, const int& _callPutFlag, double& _expiryDays, double& _deliveryDays){
+EuropeanOption::EuropeanOption(const double& _strike, const int& _callPutFlag, double& _expiryDays, double& _deliveryDays){
 	
 	m_error = new ErrorHandler();
 
@@ -56,7 +56,6 @@ EuropeanOption::EuropeanOption(CurrencyPair* _ccyPair, const double& _strike, co
 		return;
 	}
 
-	m_currencyPair = _ccyPair;
 	m_payOff = new PayOffVanilla(_strike, _callPutFlag);
 }
 

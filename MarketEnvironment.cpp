@@ -13,7 +13,6 @@ MarketEnvironment::MarketEnvironment(CurrencyPair* _currencyPair, double _fxSpot
 	m_volatility = _volatility;
 }
 
-
 MarketEnvironment::~MarketEnvironment() {
 
 }

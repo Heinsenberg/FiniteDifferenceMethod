@@ -18,13 +18,16 @@ public:
 	double getVolatility() const { return m_volatility; }
 	double getAnnualFactor() const { return m_annualFactor; }
 
+	double getAnnualFactor() { return m_annualFactor; }
+	void setAnnualFactor(double _annualFactor) { m_annualFactor = _annualFactor ; }
+
 private:
 	CurrencyPair* m_currencyPair;
 	vector<double> m_discountFactorAsset;
 	vector<double> m_discountFactorNumeraire;
 	double m_fxSpot;
 	double m_volatility;
-	double m_annualFactor = 365.0;
+	double m_annualFactor;
 };
 
 #endif
