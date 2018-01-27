@@ -23,7 +23,7 @@ protected:
 class EuropeanOption : public Instrument {
 
 public:
-	EuropeanOption(const double& _strike, const int& _callPutFlag, double& _expiryInDays, double& _deliveryDays);
+	EuropeanOption(CurrencyPair* _currencyPair, const double& _strike, const int& _callPutFlag, double& _expiryInDays, double& _deliveryDays);
 	virtual ~EuropeanOption() {};
 
 	// Virtual function is now over-ridden (not pure-virtual anymore)
@@ -33,7 +33,7 @@ public:
 	double getExpiryDays() const { return m_expiryDays; };
 	double getDeliveryDays() const { return m_deliveryDays; };
 	int getCallPutFlag() const { return m_callPutFlag; };
-	//CurrencyPair* getCurrencyPair() const { return m_currencyPair; };
+	CurrencyPair* getCurrencyPair() const { return m_currencyPair; };
 	PayOff* getPayOff() const { return m_payOff; };
 	ErrorHandler* getError() const { return m_error; };
 
@@ -42,7 +42,7 @@ private:
 	double m_expiryDays;
 	double m_deliveryDays;
 	int m_callPutFlag;
-	//CurrencyPair* m_currencyPair;
+	CurrencyPair* m_currencyPair;
 	ErrorHandler* m_error;
 
 };

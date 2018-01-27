@@ -12,9 +12,20 @@ PayOff * Instrument::operator()(const PayOff & _payOff){
 	return m_payOff;
 }
 
-EuropeanOption::EuropeanOption(const double& _strike, const int& _callPutFlag, double& _expiryDays, double& _deliveryDays){
+EuropeanOption::EuropeanOption(CurrencyPair* _currencyPair, const double& _strike, const int& _callPutFlag, double& _expiryDays, double& _deliveryDays){
 	
 	m_error = new ErrorHandler();
+
+	try {
+
+		m_currencyPair = _currencyPair;
+
+	}
+	catch (runtime_error& e) {
+		m_error->setException(e);
+		m_error->setErrorFlag(true);
+		return;
+	}
 
 	try {
 		(_strike < 0) ? throw runtime_error("Strike must be greater than 0") : m_strike = _strike;

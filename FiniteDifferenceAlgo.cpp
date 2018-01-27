@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include "FiniteDifferenceEngine.h"
 
 void show_vector(vector<double> A) {
@@ -25,7 +26,7 @@ void main() {
 
 	//Create the market environment
 	string ccyPair = "EURUSD";
-	double spot = 30;
+	double fxSpot = 30;                                    // Fx Spot Mid Rate
 	vector<double> discountFactorAsset(1000,exp(0.1));	 // discount Factor asset 
 	vector<double> discountFactorNumeraire(1000, 1.00);  // discount Factor numeraire
 	double volatility = 0.4;							 // Volatility of the underlying (40%)
@@ -37,12 +38,19 @@ void main() {
 	(CcyPair->getError()->getErrorFlag()) ? printf(CcyPair->getError()->getException().what()) : printf("OKAY");
 
 	//Create market environment
-	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,spot, discountFactorAsset, discountFactorNumeraire, volatility);
+	MarketEnvironment* MktEnvironment = new MarketEnvironment(CcyPair,fxSpot, discountFactorAsset, discountFactorNumeraire, volatility);
 	MktEnvironment->setAnnualFactor(annualFactor);
 
+	//map of instrument and mkt env? 
+	// TreeMap<String,Object> book = new TreeMap<string,Object>();
+	// create a 2 node graph : Instrument <-> mktEnv many to 1
+	// book = collection of options, indexed by ccy pair
+	std:map<string, EuropeanOption> newMap;
+	
 	//Create a European Option 
-	EuropeanOption* EuropeanOpt = new EuropeanOption(strike, callPutFlag, expiryDays, deliveryDays);
+	EuropeanOption* EuropeanOpt = new EuropeanOption(CcyPair,strike, callPutFlag, expiryDays, deliveryDays);
 	(EuropeanOpt->getError()->getErrorFlag()) ? printf(EuropeanOpt->getError()->getException().what()) : printf("OKAY");
+	//newMap[ccyPair] = EuropeanOpt;
 
 	//Create boundary and initial conditions
 	BoundaryAndInitialConditions* BndAndInitConditions = new BoundaryAndInitialConditions();
