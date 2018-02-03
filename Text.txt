@@ -21,9 +21,9 @@ So we then solve the parabolic pde problem.
 
 Now we start with implicit method.
 
-2) dF/dt ~ f(i+1,j)-f(i,j) / deltaT
+2) dF/dt ~ f(i+1,j)-f(i,j) / ∆T
 
-3) d^2F/dS ~ (f(i,j+1) -2f(i,j) + f(i,j-1)) / (deltaS)^2
+3) d^2F/dS ~ (f(i,j+1) -2f(i,j) + f(i,j-1)) / (∆S)^2
 
 Hence substituting 2) & 3) into 1)
 
